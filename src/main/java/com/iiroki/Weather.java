@@ -3,6 +3,7 @@ package com.iiroki;
 public class Weather {
 	private String city_;
 	private String country_;
+	private String region_;
 	private int temperature_;
 	private String description_;
 	private String localTime_;
@@ -11,28 +12,25 @@ public class Weather {
 		initWeather();
 	}
 	
-	public Weather(String city, String country, int temperature, String description, String localTime) {
+	public Weather(String city, String country, String region, int temperature, String description, String localTime) {
 		city_ = city;
 		country_ = country;
+		region_ = region;
 		temperature_ = temperature;
 		description_ = description;
 		localTime_ = localTime;
 	}
-	
-	public void setWeather(String city, String country, int temperature, String description, String localTime) {
-		city_ = city;
-		country_ = country;
-		temperature_ = temperature;
-		description_ = description;
-		localTime_ = localTime;
-	}
-		
+			
 	public String getCity() {
 		return city_;
 	}
 	
 	public String getCountry() {
 		return country_;
+	}
+	
+	public String getRegion() {
+		return region_;
 	}
 	
 	public int getTemperature() {

@@ -1,14 +1,15 @@
 package com.iiroki;
 
 public class AppEngine {
-	private Weather weather_;
+	private WeatherStatus weather_;
 	private MainWindow mainWindow_;
 	private WeatherSearch searchClient_;
 	
-	public AppEngine(Weather w, MainWindow mw) {
-		weather_ = w;
+	public AppEngine(WeatherStatus ws, MainWindow mw) {
+		weather_ = ws;
 		mainWindow_ = mw;
 		searchClient_ = new WeatherSearch();
+		
 	}
 	
 	public void initController() {
@@ -18,8 +19,11 @@ public class AppEngine {
 	private void searchWeather() {
 		// Search weather from input city
 		String city = mainWindow_.getSearchInput().getText();
-		weather_ = searchClient_.search(city);
+		weather_.setWeather(searchClient_.search(city));
 		// Update weather in view
-		mainWindow_.updateWeather(weather_);
+		mainWindow_.updateStatus(weather_);
+		if (weather_.hasSearched()) {
+			mainWindow_.updateWeather(weather_.getWeather());
+		}
 	}
 }

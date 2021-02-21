@@ -17,7 +17,7 @@ public class WeatherSearch {
 			String responseStr = client_.get(city);
 			return parseResponse(responseStr);
 		} catch (Exception e) {
-			return new Weather();
+			return null;
 		}
 	}
 	
