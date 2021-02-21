@@ -1,8 +1,5 @@
 package com.iiroki;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 public class AppEngine {
 	private Weather weather_;
 	private MainWindow mainWindow_;
@@ -20,16 +17,16 @@ public class AppEngine {
 	}
 	
 	public void initController() {
-		mainWindow_.getSearchButton().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// Search weather from input city
-				String city = mainWindow_.getSearchInput().getText();
-				testWeather_ = searchClient_.search(city);
-				System.out.println(testWeather_);
-				weather_.setWeather(city, "Unknown", "15", "Unknown", "00:00");
-				mainWindow_.updateWeather(weather_);
-			}
-		});
-	}	
+		mainWindow_.getSearchButton().addActionListener(e -> searchWeather());
+	}
+	
+	private void searchWeather() {
+		// Search weather from input city
+		String city = mainWindow_.getSearchInput().getText();
+		testWeather_ = searchClient_.search(city);
+		System.out.println(testWeather_);
+		weather_.setWeather(city, "Unknown", "15", "Unknown", "00:00");
+		// Update weather in view
+		mainWindow_.updateWeather(weather_);
+	}
 }

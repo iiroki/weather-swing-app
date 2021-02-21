@@ -5,26 +5,25 @@
     <version>0.0.1-SNAPSHOT</version>
     
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 		    <groupId>junit</groupId>
 		    <artifactId>junit</artifactId>
 		    <version>4.12</version>
 		    <scope>test</scope>
 		</dependency>
-		<!-- https://github.com/cdimascio/dotenv-java -->
+
 		<dependency>
 		    <groupId>io.github.cdimascio</groupId>
 		    <artifactId>dotenv-java</artifactId>
 		    <version>2.2.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.asynchttpclient/async-http-client -->
+
 		<dependency>
 		    <groupId>org.asynchttpclient</groupId>
 		    <artifactId>async-http-client</artifactId>
-		    <version>2.12.2</version>
+		    <version>2.12.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+
 		<dependency>
 		    <groupId>com.google.code.gson</groupId>
 		    <artifactId>gson</artifactId>
@@ -44,20 +43,16 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-            
-            <!-- Make runnable .jar -->
-            <plugin>
-		      <groupId>org.apache.maven.plugins</groupId>
-		      <artifactId>maven-jar-plugin</artifactId>
-		      <version>3.1.0</version>
-		      <configuration>
-		        <archive>
-		          <manifest>
-		            <mainClass>com.iiroki.WeatherSwingApp</mainClass>
-		          </manifest>
-		        </archive>
-		      </configuration>
-		    </plugin>
+			
+			<!-- Run project with "mvn exec:java" -->
+			<plugin>
+			      <groupId>org.codehaus.mojo</groupId>
+			      <artifactId>exec-maven-plugin</artifactId>
+		          <version>3.0.0</version>
+		          <configuration>
+		              <mainClass>com.iiroki.WeatherSwingApp</mainClass>
+			      </configuration>
+			</plugin>
         </plugins>
     </build>
 </project>
