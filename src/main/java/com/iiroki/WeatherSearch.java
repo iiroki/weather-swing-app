@@ -15,7 +15,6 @@ public class WeatherSearch {
 	public void setSearch(String city) {
 		city_ = city;
 		searching_ = true;
-		System.out.println("Search set to: " + city_);
 		client_.get(city_);
 	}
 	
