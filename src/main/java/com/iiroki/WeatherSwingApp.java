@@ -9,9 +9,11 @@ import javax.swing.*;
 
 public class WeatherSwingApp {
 	private static WeatherSearch ws_;
+	private static String weather_;
 	
 	public static void main(String[] args) {
 		ws_ = new WeatherSearch();
+		weather_ = ws_.getCurrent();
 
 		JFrame mainWindow = new JFrame("Weather Swing App");
 		mainWindow.setSize(800, 600);
@@ -44,10 +46,17 @@ public class WeatherSwingApp {
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ws_.setSearch(searchInput.getText());
+				// Search weather and save it to weather_
+				ws_.search(searchInput.getText(), () -> weather_ = ws_.getCurrent());
+				System.out.println("Weather updated to: " + weather_);
 			}
 		});
 		
 		panel.add(searchButton);
+		
+		// Weather
+		JLabel weatherLabel = new JLabel(weather_);
+		weatherLabel.setSize(600, 400);
+		panel.add(weatherLabel);
 	}
 }

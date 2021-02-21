@@ -1,7 +1,6 @@
 package com.iiroki;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import org.asynchttpclient.*;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -18,25 +17,18 @@ public class WeatherstackClient {
 		httpClient_ = Dsl.asyncHttpClient();
 	}
 	
-	public void get(String city) {
+	public String get(String city) throws Exception {
 		String url = getRequestUrl(city);
-		System.out.println("GET: " + url);
 		
 		// Make the HTTP request
-		Future<Integer> whenResponse = httpClient_.prepareGet(url).execute(new AsyncCompletionHandler<Integer>() {
+		Future<String> whenResponse = httpClient_.prepareGet(url).execute(new AsyncCompletionHandler<String>() {
 			@Override
-			public Integer onCompleted(Response response) throws IOException {
-				return response.getStatusCode();
+			public String onCompleted(Response response) throws IOException {
+				return response.getResponseBody();
 			}
 		});
 		
-		try {
-			Integer status = whenResponse.get();
-			System.out.println("HTTP Status: " + status);
-		} catch (InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		return whenResponse.get();
 	}
 	
 	private String getRequestUrl(String city) {
