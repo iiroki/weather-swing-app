@@ -7,8 +7,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class WeatherSwingApp {	
+public class WeatherSwingApp {
+	private static WeatherSearch ws_;
+	
 	public static void main(String[] args) {
+		ws_ = new WeatherSearch();
+
 		JFrame mainWindow = new JFrame("Weather Swing App");
 		mainWindow.setSize(800, 600);
 		mainWindow.setLocationRelativeTo(null);
@@ -20,7 +24,7 @@ public class WeatherSwingApp {
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainWindow.setVisible(true);
 	}
-	
+		
 	private static void addComponents(JPanel panel) {
 		// Text field for search searchInput
 		JTextField searchInput = new JTextField();
@@ -40,7 +44,7 @@ public class WeatherSwingApp {
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Weather from: \"" + searchInput.getText() + "\"");
+				ws_.setSearch(searchInput.getText());
 			}
 		});
 		
