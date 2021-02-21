@@ -2,9 +2,10 @@ package com.iiroki;
 
 public class WeatherSwingApp {
 	public static void main(String[] args) {
-		Weather w = new Weather();
-		MainWindow mw = new MainWindow();
-		AppEngine e = new AppEngine(w, mw);
+		// MVC
+		Weather w = new Weather(); // Model
+		MainWindow mw = new MainWindow(); // View
+		AppEngine e = new AppEngine(w, mw); // Controller
 		e.initController();
 		mw.show();
 	}
