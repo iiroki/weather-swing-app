@@ -9,16 +9,15 @@ public class AppEngine {
 		status_ = ws;
 		mainWindow_ = mw;
 		searchClient_ = new WeatherSearch();
-		
 	}
 	
 	public void initController() {
-		mainWindow_.getSearchButton().addActionListener(e -> searchWeather());
+		mainWindow_.setSearchButtonAction(() -> searchWeather());
 	}
 	
 	private void searchWeather() {
 		// Search weather from input city
-		String city = mainWindow_.getSearchInput().getText();
+		String city = mainWindow_.getSearchValue();
 		if (city.isEmpty()) {
 			status_.resetWeather();
 		} else {

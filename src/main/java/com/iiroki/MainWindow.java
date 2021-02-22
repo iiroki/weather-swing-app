@@ -32,12 +32,12 @@ public class MainWindow {
 		mainFrame_.setVisible(true);
 	}
 	
-	public JTextField getSearchInput() {
-		return searchInput_;
+	public String getSearchValue() {
+		return searchInput_.getText();
 	}
 	
-	public JButton getSearchButton() {
-		return searchButton_;
+	public void setSearchButtonAction(Runnable action) {
+		searchButton_.addActionListener(e -> action.run());
 	}
 	
 	public void updateStatus(WeatherStatus ws) {
