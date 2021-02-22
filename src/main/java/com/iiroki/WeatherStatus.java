@@ -3,10 +3,12 @@ package com.iiroki;
 public class WeatherStatus {
 	private boolean searched_;
 	private Weather weather_;
+	private boolean success_;
 	
 	public WeatherStatus() {
 		searched_ = false;
 		weather_ = null;
+		success_ = false;
 	}
 	
 	public boolean hasSearched() {
@@ -17,18 +19,24 @@ public class WeatherStatus {
 		return weather_;
 	}
 	
+	public boolean getSuccess() {
+		return success_;
+	}
+	
 	public void setWeather(Weather w) {
 		if (w == null) {
-			searched_ = false;
+			success_ = false;
 		} else {
-			searched_ = true;
+			success_ = true;
 		}
 
+		searched_ = true;
 		weather_ = w;
 	}
 	
 	public void resetWeather() {
 		weather_ = null;
 		searched_ = false;
+		success_ = false;
 	}
 }

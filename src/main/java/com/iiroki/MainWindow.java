@@ -12,6 +12,7 @@ public class MainWindow {
 	private JLabel weatherLabel_;	
 	
 	public static final String NOT_SEARCHED = "Enter a city to search weather from.";
+	public static final String SEARCH_ERROR = "Couldn't retrieve weather data from the wanted city.";
 
 	public MainWindow() {
 		mainFrame_ = new JFrame("Weather Swing App");
@@ -42,6 +43,12 @@ public class MainWindow {
 	public void updateStatus(WeatherStatus ws) {
 		if (!ws.hasSearched()) {
 			statusLabel_.setText(NOT_SEARCHED);
+			clearWeather();
+			return;
+		}
+		
+		if (!ws.getSuccess()) {
+			statusLabel_.setText(SEARCH_ERROR);
 			clearWeather();
 			return;
 		}

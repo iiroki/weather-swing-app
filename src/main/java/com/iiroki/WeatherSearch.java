@@ -22,6 +22,11 @@ public class WeatherSearch {
 	}
 	
 	private Weather parseResponse(String response) {
+		String success = response.substring(11, 16);
+		if (success == "false") {
+			System.out.println("Error!");
+			return null;
+		}
 		WeatherCurrentResponse parsedWeather = parser_.fromJson(response, WeatherCurrentResponse.class);
 		return parsedWeather.getWeather();
 	}
