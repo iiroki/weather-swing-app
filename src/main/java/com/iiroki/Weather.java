@@ -8,11 +8,7 @@ public class Weather {
 	private int windSpeed_;
 	private String description_;
 	private String localTime_;
-	
-	public Weather() {
-		initWeather();
-	}
-	
+		
 	public Weather(String city, String country, String region, int temperature, int windSpeed, String description, String localTime) {
 		city_ = city;
 		country_ = country;
@@ -49,13 +45,5 @@ public class Weather {
 	
 	public String getLocalTime() {
 		return localTime_;
-	}
-	
-	private void initWeather() {
-		city_ = "Test city";
-		country_ = "Test county";
-		temperature_ = 0;
-		description_ = "Test description";
-		localTime_ = "Test time";
 	}
 }
