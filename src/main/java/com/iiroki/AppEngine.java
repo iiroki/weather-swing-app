@@ -19,7 +19,11 @@ public class AppEngine {
 	private void searchWeather() {
 		// Search weather from input city
 		String city = mainWindow_.getSearchInput().getText();
-		weather_.setWeather(searchClient_.search(city));
+		if (city == "") {
+			weather_.resetWeather();
+		} else {
+			weather_.setWeather(searchClient_.search(city));
+		}
 		// Update weather in view
 		mainWindow_.updateStatus(weather_);
 		if (weather_.hasSearched()) {

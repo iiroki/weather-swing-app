@@ -5,6 +5,7 @@ public class Weather {
 	private String country_;
 	private String region_;
 	private int temperature_;
+	private int windSpeed_;
 	private String description_;
 	private String localTime_;
 	
@@ -12,15 +13,16 @@ public class Weather {
 		initWeather();
 	}
 	
-	public Weather(String city, String country, String region, int temperature, String description, String localTime) {
+	public Weather(String city, String country, String region, int temperature, int windSpeed, String description, String localTime) {
 		city_ = city;
 		country_ = country;
 		region_ = region;
 		temperature_ = temperature;
+		windSpeed_ = windSpeed;
 		description_ = description;
 		localTime_ = localTime;
 	}
-			
+
 	public String getCity() {
 		return city_;
 	}
@@ -35,6 +37,10 @@ public class Weather {
 	
 	public int getTemperature() {
 		return temperature_;
+	}
+	
+	public int getWindSpeed() {
+		return windSpeed_;
 	}
 	
 	public String getDescription() {

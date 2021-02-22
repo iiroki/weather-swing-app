@@ -13,28 +13,13 @@ public class WeatherCurrentResponse {
 				location.getName(),
 				location.getCountry(),
 				location.getRegion(),
-				current.getTemp(),
+				current.getTemperature(),
+				current.getWindSpeed(),
 				current.getDescription(),
 				location.getLocalTime()
 				);
 	}
 	
-	public String getCity() {
-		return location.getName();
-	}
-	
-	public String getCountry() {
-		return location.getCountry();
-	}
-
-	public int getTemp() {
-		return current.getTemp();
-	}
-	
-	public String getDescription() {
-		return current.getDescription();
-	}
-
 	private class ResponseRequest {
 		//private String type;
 		//private String query;
@@ -71,16 +56,33 @@ public class WeatherCurrentResponse {
 	}
 
 	private class ResponseCurrent {
-		////private String observation_time;
+		//private String observation_time;
 		private int temperature;
+		//private String weather_code;
+		//private String[] weather_icons;
 		private String[] weather_descriptions;
-		
-		public int getTemp() {
+		private int wind_speed;
+		//private int wind_degree;
+		//private String wind_dir;
+		//private int pressure;
+		//private int precip;
+		//private int humidity;
+		//private int cloudcover;
+		//private int feelslike;
+		//private int uv_index;
+		//private int visibility;
+		//private String is_day;
+
+		public int getTemperature() {
 			return temperature;
 		}
 		
 		public String getDescription() {
 			return weather_descriptions[0];
+		}
+		
+		public int getWindSpeed() {
+			return wind_speed;
 		}
 	}
 }
