@@ -2,6 +2,8 @@
 
 **This project is my first application written in Java and is done for my own learning purposes!**
 
+![](misc/screencapture_loading.gif)
+
 Tools and techniques used and studied in the project:
 - Java (version 8)
 - Java Swing (GUI)
@@ -34,7 +36,7 @@ $ mvn exec:java
 
 **Loading indicator**
 
-![](misc/screencapture_loading.gif)
+![](misc/screenshot_loading.png)
 
 **Error occurred during search**
 
