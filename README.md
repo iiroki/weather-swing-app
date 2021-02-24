@@ -32,6 +32,10 @@ $ mvn exec:java
 
 ![](misc/screenshot_weather.png)
 
+**Loading indicator**
+
+![](misc/screenshot_loading.png)
+
 **Error occurred during search**
 
 ![](misc/screenshot_error.png)
