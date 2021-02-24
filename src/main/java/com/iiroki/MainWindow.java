@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 
 public class MainWindow {
@@ -13,11 +12,17 @@ public class MainWindow {
 	private JTextField searchInput_;
 	private JButton searchButton_;
 	private JLabel statusLabel_;
-	private JLabel weatherLabel_;	
+	private JLabel weatherLabel_;
+	private JLabel loadingLabel_;
 	
 	private static final String NOT_SEARCHED = "Enter a city to search weather from.";
 	private static final String SEARCHING = "Searching...";
 	private static final String SEARCH_ERROR = "Couldn't retrieve weather data from the wanted city.";
+	
+	@FunctionalInterface
+	public interface SameSearch {
+		boolean isSame(); // If new search is the same as the last one
+	}
 
 	public MainWindow() {
 		mainFrame_ = new JFrame("Weather Swing App");
@@ -26,6 +31,7 @@ public class MainWindow {
 		searchButton_ = new JButton("Search");
 		statusLabel_ = new JLabel(NOT_SEARCHED, SwingConstants.CENTER);
 		weatherLabel_ = new JLabel("", SwingConstants.CENTER);
+		loadingLabel_ = new JLabel(new ImageIcon(getClass().getResource("/loading.gif")));
 		
 		mainFrame_.setSize(650, 450);
 		mainFrame_.setResizable(false);
@@ -41,17 +47,22 @@ public class MainWindow {
 		return searchInput_.getText();
 	}
 	
-	public void setSearchButtonAction(Runnable action) {
+	public void setSearchButtonAction(Runnable action, SameSearch sameSearch) {
 		ActionListener searchAction = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
 					public void run() {
+						// Don't do anything if same search 
+						boolean same = sameSearch.isSame();
+						if (same) {
+							return;
+						}
 						// Update GUI first
 						setSearching();
+						// Do the wanted action in the background!
 						SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-							// Do the wanted action in the background!
 							@Override
 							protected Void doInBackground() {
                                 action.run();
@@ -69,10 +80,12 @@ public class MainWindow {
 	
 	public void setSearching() {
 		clearWeather();
+		loadingLabel_.setVisible(true);
 		statusLabel_.setText(SEARCHING);
 	}
 	
 	public void updateStatus(WeatherStatus ws) {
+		loadingLabel_.setVisible(false);
 		if (!ws.getSearched()) {
 			statusLabel_.setText(NOT_SEARCHED);
 			clearWeather();
@@ -123,12 +136,14 @@ public class MainWindow {
 		Dimension searchButtonSize = new Dimension(120, CELL_HEIGHT);
 		Dimension statusLabelSize = new Dimension(mainFrame_.getWidth(), 100);
 		Dimension weatherLabelSize = new Dimension(mainFrame_.getWidth(), 200);
+		Dimension loadingSize = new Dimension(100, 100); // loading.gif
 		
 		// Bounds
 		searchInput_.setBounds(MID - (searchInputSize.width/2), 10, searchInputSize.width, searchInputSize.height);
 		searchButton_.setBounds(MID - (searchButtonSize.width/2), CELL_HEIGHT + GAP, searchButtonSize.width, searchButtonSize.height);
 		statusLabel_.setBounds(MID - (statusLabelSize.width/2), 2 * (CELL_HEIGHT + GAP), statusLabelSize.width, statusLabelSize.height);
 		weatherLabel_.setBounds(MID - (weatherLabelSize.width/2), 3 * (CELL_HEIGHT + GAP), weatherLabelSize.width, weatherLabelSize.height);
+		loadingLabel_.setBounds(MID - (loadingSize.width/2), 3 * (CELL_HEIGHT + GAP) + 20, loadingSize.width, loadingSize.height);
 		
 		// Search input style
 		Font inputFont = new Font("SansSerif", Font.PLAIN, 20);
@@ -147,10 +162,14 @@ public class MainWindow {
 		Font weatherFont = new Font("SansSerif", Font.PLAIN, 20);
 		weatherLabel_.setFont(weatherFont);
 		
+		// Loading icon not visible at the start
+		loadingLabel_.setVisible(false);
+		
 		// Add components to the panel
 		panel_.add(searchInput_);
 		panel_.add(searchButton_);
 		panel_.add(statusLabel_);
 		panel_.add(weatherLabel_);
+		panel_.add(loadingLabel_);
 	}
 }

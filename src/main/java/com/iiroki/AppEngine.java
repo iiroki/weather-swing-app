@@ -12,13 +12,18 @@ public class AppEngine {
 	}
 	
 	public void initController() {
-		mainWindow_.setSearchButtonAction(() -> searchWeather());
+		mainWindow_.setSearchButtonAction(() -> searchWeather(), () -> sameSearch());
 	}
 	
 	private void searchWeather() {
-		mainWindow_.setSearching();
 		// Search weather from input city
 		String city = mainWindow_.getSearchValue();
+		if (status_.getWeather() != null
+				&& city.toLowerCase().equals(status_.getWeather().getCity().toLowerCase())) {
+			mainWindow_.updateStatus(status_);
+			return;
+		}
+		mainWindow_.setSearching();
 		if (city.isEmpty()) {
 			status_.resetWeather();
 		} else {
@@ -29,5 +34,10 @@ public class AppEngine {
 		if (status_.getSearched() && status_.getSuccess()) {
 			mainWindow_.updateWeather(status_.getWeather());
 		}
+	}
+	
+	private boolean sameSearch() {
+		return status_.getWeather() != null
+				&& mainWindow_.getSearchValue().toLowerCase().equals(status_.getWeather().getCity().toLowerCase());
 	}
 }
