@@ -34,7 +34,7 @@ $ mvn exec:java
 
 **Loading indicator**
 
-![](misc/screenshot_loading.png)
+![](misc/screencapture_loading.gif)
 
 **Error occurred during search**
 
