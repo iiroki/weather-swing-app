@@ -16,6 +16,7 @@ public class AppEngine {
 	}
 	
 	private void searchWeather() {
+		mainWindow_.setSearching();
 		// Search weather from input city
 		String city = mainWindow_.getSearchValue();
 		if (city.isEmpty()) {
@@ -25,7 +26,7 @@ public class AppEngine {
 		}
 		// Update weather in view
 		mainWindow_.updateStatus(status_);
-		if (status_.hasSearched() && status_.getSuccess()) {
+		if (status_.getSearched() && status_.getSuccess()) {
 			mainWindow_.updateWeather(status_.getWeather());
 		}
 	}

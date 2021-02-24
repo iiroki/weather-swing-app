@@ -11,7 +11,7 @@ public class WeatherStatus {
 		success_ = false;
 	}
 	
-	public boolean hasSearched() {
+	public boolean getSearched() {
 		return searched_;
 	}
 	
@@ -22,7 +22,7 @@ public class WeatherStatus {
 	public boolean getSuccess() {
 		return success_;
 	}
-	
+		
 	public void setWeather(Weather w) {
 		if (w == null) {
 			success_ = false;

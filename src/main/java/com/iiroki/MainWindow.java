@@ -2,20 +2,26 @@ package com.iiroki;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 public class MainWindow {
 	private JFrame mainFrame_;
+	private JPanel panel_;
 	private JTextField searchInput_;
 	private JButton searchButton_;
 	private JLabel statusLabel_;
 	private JLabel weatherLabel_;	
 	
-	public static final String NOT_SEARCHED = "Enter a city to search weather from.";
-	public static final String SEARCH_ERROR = "Couldn't retrieve weather data from the wanted city.";
+	private static final String NOT_SEARCHED = "Enter a city to search weather from.";
+	private static final String SEARCHING = "Searching...";
+	private static final String SEARCH_ERROR = "Couldn't retrieve weather data from the wanted city.";
 
 	public MainWindow() {
 		mainFrame_ = new JFrame("Weather Swing App");
+		panel_ = new JPanel();
 		searchInput_ = new JTextField();
 		searchButton_ = new JButton("Search");
 		statusLabel_ = new JLabel(NOT_SEARCHED, SwingConstants.CENTER);
@@ -23,9 +29,8 @@ public class MainWindow {
 		
 		mainFrame_.setSize(650, 450);
 		mainFrame_.setResizable(false);
-		JPanel panel = new JPanel();
-		initWindow(panel);
-		mainFrame_.add(panel);
+		initWindow();
+		mainFrame_.add(panel_);
 	}
 	
 	public void show() {
@@ -37,11 +42,38 @@ public class MainWindow {
 	}
 	
 	public void setSearchButtonAction(Runnable action) {
-		searchButton_.addActionListener(e -> action.run());
+		ActionListener searchAction = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						// Update GUI first
+						setSearching();
+						SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+							// Do the wanted action in the background!
+							@Override
+							protected Void doInBackground() {
+                                action.run();
+                                return null;
+                            }
+						};
+						worker.execute();
+					}
+				});
+			}
+		};
+		
+		searchButton_.addActionListener(searchAction);
+	}
+	
+	public void setSearching() {
+		clearWeather();
+		statusLabel_.setText(SEARCHING);
 	}
 	
 	public void updateStatus(WeatherStatus ws) {
-		if (!ws.hasSearched()) {
+		if (!ws.getSearched()) {
 			statusLabel_.setText(NOT_SEARCHED);
 			clearWeather();
 			return;
@@ -74,13 +106,13 @@ public class MainWindow {
 		weatherLabel_.setText("");
 	}
 		
-	private void initWindow(JPanel panel) {
+	private void initWindow() {
 		// Some constants for component placement
 		final int MID = mainFrame_.getWidth() / 2;
 		final int CELL_HEIGHT = 40;
 		final int GAP = 20;
 
-		panel.setLayout(null); // Layout
+		panel_.setLayout(null); // Layout
 
 		// Main frame
 		mainFrame_.setLocationRelativeTo(null);
@@ -116,9 +148,9 @@ public class MainWindow {
 		weatherLabel_.setFont(weatherFont);
 		
 		// Add components to the panel
-		panel.add(searchInput_);
-		panel.add(searchButton_);
-		panel.add(statusLabel_);
-		panel.add(weatherLabel_);
+		panel_.add(searchInput_);
+		panel_.add(searchButton_);
+		panel_.add(statusLabel_);
+		panel_.add(weatherLabel_);
 	}
 }

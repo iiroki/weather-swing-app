@@ -10,7 +10,7 @@ public class WeatherStatusTest {
 	public void testInit() {
 		WeatherStatus status = new WeatherStatus();
 		assertTrue(status.getWeather() == null);
-		assertFalse(status.hasSearched());
+		assertFalse(status.getSearched());
 		assertFalse(status.getSuccess());
 	}
 	
@@ -19,7 +19,7 @@ public class WeatherStatusTest {
 		WeatherStatus status = new WeatherStatus();
 		status.setWeather(new Weather("Test", "Test", "Test", 0, 0, "Test", "Test"));
 		assertFalse(status.getWeather() == null);
-		assertTrue(status.hasSearched());
+		assertTrue(status.getSearched());
 		assertTrue(status.getSuccess());
 	}
 	
@@ -28,7 +28,7 @@ public class WeatherStatusTest {
 		WeatherStatus status = new WeatherStatus();
 		status.setWeather(null);
 		assertTrue(status.getWeather() == null);
-		assertTrue(status.hasSearched());
+		assertTrue(status.getSearched());
 		assertFalse(status.getSuccess());
 	}
 	
@@ -37,11 +37,11 @@ public class WeatherStatusTest {
 		WeatherStatus status = new WeatherStatus();
 		status.setWeather(new Weather("Test", "Test", "Test", 0, 0, "Test", "Test"));
 		assertFalse(status.getWeather() == null);
-		assertTrue(status.hasSearched());
+		assertTrue(status.getSearched());
 		assertTrue(status.getSuccess());
 		status.resetWeather();
 		assertTrue(status.getWeather() == null);
-		assertFalse(status.hasSearched());
+		assertFalse(status.getSearched());
 		assertFalse(status.getSuccess());
 	}
 
